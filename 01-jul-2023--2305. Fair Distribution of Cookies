@@ -1,3 +1,26 @@
+/*--------------------------------------------------code in python---------------------------------------------------------*/
+
+class Solution:
+    def distributeCookies(self, cookies: List[int], k: int) -> int:
+        min_unfairness=float('inf')
+        dist=[0]*k
+
+        def backtrack(i):
+            nonlocal min_unfairness,dist
+
+            if i== len(cookies):
+                min_unfairness=min(min_unfairness,max(dist))
+                return
+            if min_unfairness<=max(dist):return
+            for j in range(k):
+                dist[j]+=cookies[i]
+                backtrack(i+1)
+                dist[j] -=cookies[i]
+        backtrack(0)
+        return min_unfairness
+
+/*-------------------------------------------------code in cpp-------------------------------------------------------*/
+
 class Solution {
 public:
     int distributeCookies(std::vector<int>& cookies, int k) {
@@ -24,3 +47,32 @@ private:
         }
     }
 };
+
+/*--------------------------------------------------java code ---------------------------------------*/
+
+class Solution {
+    public int distributeCookies(int[] cookies, int k) {
+        int[] minUnfairness = {Integer.MAX_VALUE};
+        int[] dist = new int[k];
+
+        backtrack(0, cookies, k, dist, minUnfairness);
+
+        return minUnfairness[0];
+    }
+
+    private void backtrack(int i, int[] cookies, int k, int[] dist, int[] minUnfairness) {
+        if (i == cookies.length) {
+            int maxCookies = Arrays.stream(dist).max().getAsInt();
+            minUnfairness[0] = Math.min(minUnfairness[0], maxCookies);
+            return;
+        }
+        if (minUnfairness[0] <= Arrays.stream(dist).max().getAsInt()) {
+            return;
+        }
+        for (int j = 0; j < k; ++j) {
+            dist[j] += cookies[i];
+            backtrack(i + 1, cookies, k, dist, minUnfairness);
+            dist[j] -= cookies[i];
+        }
+    }
+}
