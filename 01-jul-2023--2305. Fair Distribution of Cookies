@@ -1,0 +1,26 @@
+class Solution {
+public:
+    int distributeCookies(std::vector<int>& cookies, int k) {
+        int min_unfairness = std::numeric_limits<int>::max();
+        std::vector<int> dist(k, 0);
+
+        backtrack(0, cookies, k, min_unfairness, dist);
+
+        return min_unfairness;
+    }
+
+private:
+    void backtrack(int i, const std::vector<int>& cookies, int k, int& min_unfairness, std::vector<int>& dist) {
+        if (i == cookies.size()) {
+            min_unfairness = std::min(min_unfairness, *std::max_element(dist.begin(), dist.end()));
+            return;
+        }
+        if (min_unfairness <= *std::max_element(dist.begin(), dist.end()))
+            return;
+        for (int j = 0; j < k; ++j) {
+            dist[j] += cookies[i];
+            backtrack(i + 1, cookies, k, min_unfairness, dist);
+            dist[j] -= cookies[i];
+        }
+    }
+};
