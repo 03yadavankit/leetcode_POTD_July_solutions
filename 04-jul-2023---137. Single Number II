@@ -1,0 +1,64 @@
+/*-------------------------------------cpp code-------------------------------------------------------*/
+
+----------------------------//using counting sort---------------------
+
+class Solution {
+public:
+    int singleNumber(vector<int>& nums) {
+        const int numBits = 32;  // Assuming 32-bit integers
+
+        // Count the frequency of each bit
+        vector<int> bitCount(numBits, 0);
+        for (int num : nums) {
+            for (int i = 0; i < numBits; i++) {
+                bitCount[i] += (num >> i) & 1;
+            }
+        }
+
+        // Construct the single number using the bits with frequency not divisible by 3
+        int result = 0;
+        for (int i = 0; i < numBits; i++) {
+            if (bitCount[i] % 3 != 0) {
+                result |= (1 << i);
+            }
+        }
+
+        return result;
+    }
+};
+
+--------------------------Using  bit manipulation --------------------------------
+
+int singleNumber(vector<int>& nums) {
+    int ones = 0, twos = 0;
+    for (int num : nums) {
+        ones = (ones ^ num) & ~twos;
+        twos = (twos ^ num) & ~ones;
+    }
+    return ones;
+}
+
+/------------------------------------------code in python-------------------------*/
+
+def singleNumber(nums):
+    ones = 0
+    twos = 0
+   
+    for num in nums:
+        ones = (ones ^ num) & ~twos;
+        twos = (twos ^ num) & ~ones;
+
+    return ones
+
+/*--------------------------------------JAVA code------------------------------*/
+
+class Solution {
+    public int singleNumber(int[] nums) {
+    int ones = 0, twos = 0;
+    for (int num : nums) {
+        ones = (ones ^ num) & ~twos;
+        twos = (twos ^ num) & ~ones;
+    }
+    return ones;
+    }
+}
