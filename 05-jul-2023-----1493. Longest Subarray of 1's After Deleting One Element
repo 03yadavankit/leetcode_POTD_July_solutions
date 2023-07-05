@@ -1,0 +1,71 @@
+/*-----------------------------cpp code ----------------------*/
+class Solution {
+public:
+    int longestSubarray(vector<int>& nums) {
+        int cntzero = 1;
+        int l = 0;
+        int max_length = 0;
+
+        for (int r = 0; r < nums.size(); r++) {
+            if (nums[r] == 0) {
+                cntzero -= 1;
+            }
+
+            while (cntzero < 0) {
+                if (nums[l] == 0) {
+                    cntzero += 1;
+                }
+                l += 1;
+            }
+
+            max_length = max(max_length, r - l + 1);
+        }
+
+        return (max_length > 0) ? max_length - 1 : 0;
+    }
+};
+
+/*-------------------------------java code -----------------------------------------*/
+class Solution {
+    public int longestSubarray(int[] nums) {
+        int cntzero = 1;
+        int l = 0;
+        int max_length = 0;
+
+        for (int r = 0; r < nums.length; r++) {
+            if (nums[r] == 0) {
+                cntzero -= 1;
+            }
+
+            while (cntzero < 0) {
+                if (nums[l] == 0) {
+                    cntzero += 1;
+                }
+                l += 1;
+            }
+
+            max_length = Math.max(max_length, r - l + 1);
+        }
+
+        return (max_length > 0) ? max_length - 1 : 0;
+    }
+}
+/*-------------------------------python code------------------------------------------------*/
+class Solution:
+    def longestSubarray(self, nums: List[int]) -> int:
+        cntzero = 1
+        l = 0
+        max_length = 0
+
+        for r in range(len(nums)):
+            if nums[r] == 0:
+                cntzero -= 1
+
+            while cntzero < 0:
+                if nums[l] == 0:
+                    cntzero += 1
+                l += 1
+
+            max_length = max(max_length, r - l + 1)
+
+        return max_length - 1 if max_length > 0 else 0
