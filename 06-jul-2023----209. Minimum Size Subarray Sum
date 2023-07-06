@@ -1,0 +1,67 @@
+/*-----------------------cpp code------------------------------------------*/
+class Solution {
+public:
+    int minSubArrayLen(int target, vector<int>& nums) {
+        int sum=0;
+        int mn=INT_MAX;
+        int l=0,r=0,cnt=0;
+
+        while(r<nums.size())
+        {
+            sum +=nums[r];
+            r++;
+            while(sum>=target)
+            {
+                mn=min(mn,r-l);
+                sum -=nums[l];
+                l++;
+            }
+        }
+        if(mn!=INT_MAX)
+            return mn;
+        else 
+            return 0;
+    }
+};
+
+/*--------------------------------------python code------------------------------------------*/
+
+def minSubArrayLen(target, nums):
+    left = 0
+    right = 0
+    sum = 0
+    min_len = float('inf')
+    
+    while right < len(nums):
+        sum += nums[right]
+        right += 1
+        
+        while sum >= target:
+            min_len = min(min_len, right-left)
+            sum -= nums[left]
+            left += 1
+            
+    return min_len if min_len != float('inf') else 0
+
+/*--------------------------------------java code-------------------------------------------*/
+
+public int minSubArrayLen(int target, int[] nums) {
+    int left = 0;
+    int right = 0;
+    int sum = 0;
+    int minLen = Integer.MAX_VALUE;
+    
+    while (right < nums.length) {
+        sum += nums[right];
+        right++;
+        
+        while (sum >= target) {
+            minLen = Math.min(minLen, right - left);
+            sum -= nums[left];
+            left++;
+        }
+    }
+    
+    return minLen != Integer.MAX_VALUE ? minLen : 0;
+}
+
